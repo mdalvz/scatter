@@ -16,5 +16,10 @@
         "main.js"
       ]
     }
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "dev.mdalvz.scatter"
+    }
+  }
 }
