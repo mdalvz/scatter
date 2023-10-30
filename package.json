@@ -1,0 +1,30 @@
+{
+  "name": "scatter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.tsx",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.8.9",
+    "@types/react": "^18.2.33",
+    "@types/react-dom": "^18.2.14",
+    "copy-webpack-plugin": "^11.0.0",
+    "ts-loader": "^9.5.0",
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "zip-webpack-plugin": "^4.0.1"
+  },
+  "dependencies": {
+    "@use-it/event-listener": "^0.1.7",
+    "@use-it/interval": "^1.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^6.1.0"
+  }
+}
