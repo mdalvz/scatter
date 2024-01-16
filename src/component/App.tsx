@@ -17,20 +17,41 @@ const AppContainer = styled.div<{ $isOpen?: boolean; }>`
   };
 `;
 
+const OpenContainer = styled.div`
+  position: fixed;
+  right: 100px;
+  top: 5px;
+  z-index: 999999;
+  flex-direction: column;
+  pointer-events: initial;
+  display: flex;
+`;
+
 export default function App() {
   const [isOpen, setOpen] = useState<boolean>(false);
 
+  const toggle = () => {
+    setOpen((previous) => !previous);
+  }
+
   useEventListener('keydown', (event: KeyboardEvent) => {
     if (event.key === 'Insert') {
-      setOpen((previous) => !previous);
+      toggle();
     }
   });
 
   return (
-    <AppContainer $isOpen={isOpen}>
-      <KeyContextProvider>
-        <Dashboard/>
-      </KeyContextProvider>
-    </AppContainer>
+    <>
+      <OpenContainer>
+        <button onClick={toggle}>
+          {isOpen ? 'Close' : 'Open'}
+        </button>
+      </OpenContainer>
+      <AppContainer $isOpen={isOpen}>
+        <KeyContextProvider>
+          <Dashboard/>
+        </KeyContextProvider>
+      </AppContainer>
+    </>
   );
 }

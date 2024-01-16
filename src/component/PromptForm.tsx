@@ -6,6 +6,10 @@ import useInterval from '@use-it/interval';
 import { getRequirements } from '../helper/getRequirements';
 import { promptAndAnswer } from '../helper/promptAndAnswer';
 
+const StatusHeaderContainer = styled.button`
+  width: 100%;
+`;
+
 const StatusHeader = styled.div<{$color?: string;}>`
   text-align: center;
   font-size: 3rem;
@@ -22,23 +26,27 @@ export default function PromptForm() {
   const [ letter, setLetter ] = useState<string | null>(null);
   const [ questions, setQuestions ] = useState<string[]>([]);
 
+  const onStart = async () => {
+    if (!loading) {
+      setLoading(true);
+      setStatus('Loading');
+      setStatusColor('orange');
+      try {
+        await promptAndAnswer(keyContext.key);
+        setStatus('Succeeded');
+        setStatusColor('green');
+      } catch (error) {
+        setStatus('Failed');
+        setStatusColor('red');
+      }finally {
+        setLoading(false);
+      }
+    }
+  };
+
   useEventListener('keydown', async (event: KeyboardEvent) => {
     if (event.key === 'Delete') {
-      if (!loading) {
-        setLoading(true);
-        setStatus('Loading');
-        setStatusColor('yellow');
-        try {
-          await promptAndAnswer(keyContext.key);
-          setStatus('Succeeded');
-          setStatusColor('green');
-        } catch (error) {
-          setStatus('Failed');
-          setStatusColor('red');
-        }finally {
-          setLoading(false);
-        }
-      }
+      await onStart();
     }
   });
 
@@ -50,9 +58,11 @@ export default function PromptForm() {
 
   return (
     <div>
-      <StatusHeader $color={statusColor}>
-        {status}
-      </StatusHeader>
+      <StatusHeaderContainer onClick={onStart}>
+        <StatusHeader $color={statusColor}>
+          {status}
+        </StatusHeader>
+      </StatusHeaderContainer>
       <div>
         Letter: {letter || 'None'}
       </div>
